@@ -13,18 +13,26 @@
   </head>
   <body>
     <div id="main-container">
-      <h1 id="title">Tic Tac Toe</h1>
-      <div class="game-board">
-        <div value="1" id="1" class="box"></div>
-        <div value="2" id="2" class="box"></div>
-        <div value="2" id="3" class="box"></div>
-        <div value="3" id="4" class="box"></div>
-        <div value="4" id="5" class="box"></div>
-        <div value="6" id="6" class="box"></div>
-        <div value="7" id="7" class="box"></div>
-        <div value="8" id="8" class="box"></div>
-        <div value="9" id="9" class="box"></div>
+      <div id="side-container">
+        <button id="reset-button">RESET</button>
+        <p id="player-one" class="score">Player O:</p>
+        <p id="player-two" class="score">Player X:</p>
       </div>
+      <h1 id="title">Tic Tac Toe</h1>
+      <div id="hide" class="cover">
+        <div class="game-board">
+          <div value="1" id="1" class="box"></div>
+          <div value="2" id="2" class="box"></div>
+          <div value="2" id="3" class="box"></div>
+          <div value="3" id="4" class="box"></div>
+          <div value="4" id="5" class="box"></div>
+          <div value="6" id="6" class="box"></div>
+          <div value="7" id="7" class="box"></div>
+          <div value="8" id="8" class="box"></div>
+          <div value="9" id="9" class="box"></div>
+        </div>
+      </div>
+
       <div id="win-message"></div>
     </div>
 

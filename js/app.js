@@ -3,15 +3,51 @@ window.onload = () => {
   const body = document.querySelector("body");
   const winningMessage = document.createElement("p");
   const winMessageDiv = document.querySelector("#win-message");
-  let gameOver = false;
+  const resetButton = document.querySelector("#reset-button");
+  const playerOneScoreText = document.querySelector("#player-one");
+  const playerTwoScoreText = document.querySelector("#player-two");
+  const cover = document.querySelector(".cover");
 
   let turnNumber = 0;
 
-  let moves = [, , , , , , , , ,];
+  let moves = [];
+
+  let scores = {
+    playerOneScore: 0,
+    playerTwoScore: 0
+  };
+
+  let stopGame = () => {
+    boxes.forEach(box => {
+      box.className = "disable-clicking";
+    });
+  };
+
+  let updatePlayerScore = winner => {
+    winner === "X" ? scores.playerTwoScore++ : scores.playerOneScore++;
+    playerOneScoreText.innerHTML = `Player O: ${scores.playerOneScore}`;
+    playerTwoScoreText.innerHTML = `Player X: ${scores.playerTwoScore}`;
+  };
+
+  let handleReset = () => {
+    boxes.forEach(box => {
+      box.innerText = "";
+    });
+    winMessageDiv.remove();
+    turnNumber = 0;
+    moves = [];
+    boxes.forEach(box => {
+      box.className = "box";
+    });
+  };
+
+  resetButton.addEventListener("click", handleReset);
 
   let appendWinnerMessage = winner => {
     winningMessage.innerText = `Player ${winner} won in ${turnNumber} turns`;
     winMessageDiv.append(winningMessage);
+    gameOver = true;
+    updatePlayerScore(winner);
   };
 
   let checkForWin = () => {
@@ -21,6 +57,7 @@ window.onload = () => {
       moves[0] === moves[1] &&
       moves[1] === moves[2]
     ) {
+      stopGame();
       return appendWinnerMessage(moves[0]);
     }
     // row 2
@@ -29,6 +66,7 @@ window.onload = () => {
       moves[3] === moves[4] &&
       moves[4] === moves[5]
     ) {
+      stopGame();
       return appendWinnerMessage(moves[3]);
     }
     // row 3
@@ -37,7 +75,8 @@ window.onload = () => {
       moves[6] === moves[7] &&
       moves[7] === moves[8]
     ) {
-      appendWinnerMessage(moves[6]);
+      stopGame();
+      return appendWinnerMessage(moves[6]);
     }
     // column 1
     else if (
@@ -45,7 +84,8 @@ window.onload = () => {
       moves[0] === moves[3] &&
       moves[3] === moves[6]
     ) {
-      appendWinnerMessage(moves[0]);
+      stopGame();
+      return appendWinnerMessage(moves[0]);
     }
     // column 2
     else if (
@@ -53,7 +93,8 @@ window.onload = () => {
       moves[1] === moves[4] &&
       moves[4] === moves[7]
     ) {
-      appendWinnerMessage(moves[1]);
+      stopGame();
+      return appendWinnerMessage(moves[1]);
     }
     // column 3
     else if (
@@ -61,7 +102,8 @@ window.onload = () => {
       moves[2] === moves[5] &&
       moves[5] === moves[8]
     ) {
-      appendWinnerMessage(moves[2]);
+      stopGame();
+      return appendWinnerMessage(moves[2]);
     }
     // diagonal 1
     else if (
@@ -69,7 +111,8 @@ window.onload = () => {
       moves[0] === moves[4] &&
       moves[4] === moves[8]
     ) {
-      appendWinnerMessage(moves[0]);
+      stopGame();
+      return appendWinnerMessage(moves[0]);
     }
     // diagonal 2
     else if (
@@ -77,7 +120,14 @@ window.onload = () => {
       moves[2] === moves[4] &&
       moves[4] === moves[6]
     ) {
-      appendWinnerMessage(moves[2]);
+      stopGame();
+      return appendWinnerMessage(moves[2]);
+    }
+    // tie
+    else if (turnNumber === 9) {
+      stopGame();
+      winningMessage.innerText = "It's a tie!";
+      winMessageDiv.append(winningMessage);
     }
   };
 
@@ -91,14 +141,20 @@ window.onload = () => {
         box.innerText = "X";
         moves[boxIndex] = "X";
         turnNumber++;
-        console.log(moves);
         checkForWin();
-      } else {
+      }
+      if (
+        turnNumber % 1 === 0 &&
+        box.innerText !== "X" &&
+        box.innerText !== "O"
+      ) {
         box.innerText = "O";
         moves[boxIndex] = "O";
         turnNumber++;
-        console.log(moves);
         checkForWin();
+      }
+      if (gameOver === true) {
+        return;
       }
     };
     box.addEventListener("click", turns);
