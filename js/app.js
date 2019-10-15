@@ -153,9 +153,6 @@ window.onload = () => {
         turnNumber++;
         checkForWin();
       }
-      if (gameOver === true) {
-        return;
-      }
     };
     box.addEventListener("click", turns);
   });
