@@ -1,34 +1,32 @@
 window.onload = () => {
   const boxes = document.querySelectorAll(".box");
-  const body = document.querySelector("body");
   const winningMessage = document.createElement("p");
-  const winMessageDiv = document.querySelector("#win-message");
   const resetButton = document.querySelector("#reset-button");
   const playerOneScoreText = document.querySelector("#player-one");
   const playerTwoScoreText = document.querySelector("#player-two");
   const sideContainer = document.querySelector("#side-container");
-
+  // a counter to track which turn it is
   let turnNumber = 0;
-
+  // an array that keeps track of the player's moves
   let moves = [];
 
   let scores = {
     playerOneScore: 0,
     playerTwoScore: 0
   };
-
+  // function that disable the player from being able to click the boxes after a win condition is met
   let stopGame = () => {
     boxes.forEach(box => {
       box.className = "disable-clicking";
     });
   };
-
+  // a function that is passed the winner variable from the checkForWin function and then adds one to either player X or player O
   let updatePlayerScore = winner => {
     winner === "X" ? scores.playerTwoScore++ : scores.playerOneScore++;
     playerOneScoreText.innerHTML = `Player O: ${scores.playerOneScore}`;
     playerTwoScoreText.innerHTML = `Player X: ${scores.playerTwoScore}`;
   };
-
+  // resets basically everything back to the start condition except the scores
   let handleReset = () => {
     boxes.forEach(box => {
       box.innerText = "";
@@ -40,16 +38,16 @@ window.onload = () => {
       box.className = "box";
     });
   };
-
+  // attaches handleReset function to reset/play again button
   resetButton.addEventListener("click", handleReset);
-
+  // a function that is passed the winner variable and then appends a message that declares the winner based on that variable
   let appendWinnerMessage = winner => {
     winningMessage.innerHTML = `<p class="win-message">Player ${winner} won in ${turnNumber} turns</p>`;
     sideContainer.append(winningMessage);
     gameOver = true;
     updatePlayerScore(winner);
   };
-
+  // function with conditional logic that checks if a win condition has been met
   let checkForWin = () => {
     // row 1
     if (
@@ -130,8 +128,9 @@ window.onload = () => {
       sideContainer.append(winningMessage);
     }
   };
-
+  // loops through each box
   boxes.forEach((box, boxIndex) => {
+    // a handler that determines if it is empty, then adds an X or O depending on if turnNumber is even or odd. It then adds one to turn number and checks for a win.
     let turns = () => {
       if (
         turnNumber % 2 === 0 &&
@@ -154,6 +153,7 @@ window.onload = () => {
         checkForWin();
       }
     };
+    //attaches the turns function to each box
     box.addEventListener("click", turns);
   });
 };
