@@ -1,4 +1,5 @@
 window.onload = () => {
+  // variables storing DOM elements
   const boxes = document.querySelectorAll(".box");
   const winningMessage = document.createElement("p");
   const resetButton = document.querySelector("#reset-button");
@@ -14,6 +15,7 @@ window.onload = () => {
     playerOneScore: 0,
     playerTwoScore: 0
   };
+
   // function that disable the player from being able to click the boxes after a win condition is met
   let stopGame = () => {
     boxes.forEach(box => {
@@ -131,7 +133,8 @@ window.onload = () => {
   // loops through each box
   boxes.forEach((box, boxIndex) => {
     // a handler that determines if it is empty, then adds an X or O depending on if turnNumber is even or odd. It then adds one to turn number and checks for a win.
-    let turns = () => {
+    let randomNumber = Math.floor(Math.random() * 8 + 1);
+    let easyAI = () => {
       if (
         turnNumber % 2 === 0 &&
         box.innerText !== "X" &&
@@ -140,20 +143,46 @@ window.onload = () => {
         box.innerText = "X";
         moves[boxIndex] = "X";
         turnNumber++;
+        easyAI();
         checkForWin();
       }
-      if (
-        turnNumber % 1 === 0 &&
-        box.innerText !== "X" &&
-        box.innerText !== "O"
-      ) {
-        box.innerText = "O";
-        moves[boxIndex] = "O";
+      if (turnNumber % 2 !== 0 && boxes[randomNumber].innerText !== "X") {
+        boxes[randomNumber].innerText = "O";
+        moves[randomNumber] = "O";
         turnNumber++;
         checkForWin();
       }
+      console.log(turnNumber);
+      console.log(moves);
     };
+
+    // let turns = () => {
+    //   if (
+    //     turnNumber % 2 === 0 &&
+    //     box.innerText !== "X" &&
+    //     box.innerText !== "O"
+    //   ) {
+    //     box.innerText = "X";
+    //     moves[boxIndex] = "X";
+    //     easyAI();
+    //     turnNumber++;
+    //     checkForWin();
+    //   }
+    //   if (
+    //     turnNumber % 1 === 0 &&
+    //     box.innerText !== "X" &&
+    //     box.innerText !== "O"
+    //   ) {
+    //     // easyAITurn();
+    //     // moves[randomNumber] = "O";
+    //     // box.innerText = "O";
+    //     // moves[boxIndex] = "O";
+    //     turnNumber++;
+    //     checkForWin();
+    //   }
+    // };
     //attaches the turns function to each box
-    box.addEventListener("click", turns);
+    // box.addEventListener("click", turns);
+    box.addEventListener("click", easyAI);
   });
 };
