@@ -13,14 +13,20 @@
   </head>
   <body>
     <div id="main-container">
-      <div id="side-container">
-        <button id="reset-button">RESET</button>
-        <p id="player-one" class="score">Player O:</p>
-        <p id="player-two" class="score">Player X:</p>
+      <div
+        id="side-container"
+        data-tilt
+        data-tilt-reverse="true"
+        data-title-glare
+        data-title-max-glare="0.8"
+      >
+        <p id="player-one" class="score">Player O: 0</p>
+        <p id="player-two" class="score">Player X: 0</p>
+        <button id="reset-button">PLAY AGAIN</button>
       </div>
-      <h1 id="title">Tic Tac Toe</h1>
-      <div id="hide" class="cover">
-        <div class="game-board">
+      <h1 id="title">TIC TAC TOE</h1>
+      <div class="board-container">
+        <div class="game-board" data-tilt data-tilt-reverse="true">
           <div value="1" id="1" class="box"></div>
           <div value="2" id="2" class="box"></div>
           <div value="2" id="3" class="box"></div>
@@ -35,7 +41,7 @@
 
       <div id="win-message"></div>
     </div>
-
+    <script type="text/javascript" src="./js/vanilla-tilt.js"></script>
     <script src="./js/app.js"></script>
   </body>
 </html>

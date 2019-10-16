@@ -6,7 +6,7 @@ window.onload = () => {
   const resetButton = document.querySelector("#reset-button");
   const playerOneScoreText = document.querySelector("#player-one");
   const playerTwoScoreText = document.querySelector("#player-two");
-  const cover = document.querySelector(".cover");
+  const sideContainer = document.querySelector("#side-container");
 
   let turnNumber = 0;
 
@@ -33,7 +33,7 @@ window.onload = () => {
     boxes.forEach(box => {
       box.innerText = "";
     });
-    winMessageDiv.remove();
+    winningMessage.remove();
     turnNumber = 0;
     moves = [];
     boxes.forEach(box => {
@@ -44,8 +44,8 @@ window.onload = () => {
   resetButton.addEventListener("click", handleReset);
 
   let appendWinnerMessage = winner => {
-    winningMessage.innerText = `Player ${winner} won in ${turnNumber} turns`;
-    winMessageDiv.append(winningMessage);
+    winningMessage.innerHTML = `<p class="win-message">Player ${winner} won in ${turnNumber} turns</p>`;
+    sideContainer.append(winningMessage);
     gameOver = true;
     updatePlayerScore(winner);
   };

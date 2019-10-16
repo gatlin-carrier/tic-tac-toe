@@ -1,4 +1,22 @@
+/* #main-container {
+  display: flex;
+} */
+
+/* elements */
+
+html {
+  height: 100%;
+}
+
+body {
+  background-image: linear-gradient(135deg, #43cbff 10%, #9708cc 100%);
+  height: 100%;
+}
+
+/* classes */
+
 .game-board {
+  box-shadow: 2px 0px 20px -1px #2c3e50;
   width: 600px;
   height: 600px;
   margin: 0 auto;
@@ -21,6 +39,10 @@
   align-items: center;
 }
 
+.box:hover {
+  background-color: #57728c;
+}
+
 .disable-clicking {
   pointer-events: none;
   border: 6px solid #2c3e50;
@@ -37,35 +59,50 @@
   cursor: pointer;
 }
 
-#title {
-  font-family: Helvetica, sans-serif;
-  text-align: center;
-  font-size: 3em;
-  padding-bottom: 30px;
-}
-
-#reset-button {
-  background-color: #34495e;
-  color: white;
-  border: 2px solid #2c3e50;
-  font-family: Helvetica, sans-serif;
-}
-
 .score {
   padding-top: 20px;
   font-family: Helvetica, sans-serif;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 20px;
 }
 
-/* .cover {
-  width: 100%;
-} */
+/* IDs */
 
-/* #hide {
-  display: inline-block;
+#side-container {
+  box-shadow: 2px 0px 15px -1px #2c3e50;
+  padding-top: 30px;
+  color: white;
+  margin-top: 250px;
+  margin-left: 40px;
+  float: left;
+  border-radius: 10%;
+  width: 20%;
+  height: 200px;
+  text-align: center;
 }
 
-#show {
+#title {
+  padding-top: 50px;
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+  font-size: 3em;
+  padding-bottom: 30px;
+  color: white;
+}
+
+#reset-button {
+  box-shadow: 0px 0px 15px -1px #2c3e50;
+  height: 40px;
+  border: none;
   background-color: transparent;
-} */
+  padding: 10px;
+  margin-top: 25px;
+  color: white;
+  border-radius: 10%;
+  font-family: Helvetica, sans-serif;
+  margin-bottom: 20px;
+}
+
+#reset-button:hover {
+  cursor: pointer;
+}
