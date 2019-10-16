@@ -126,8 +126,8 @@ window.onload = () => {
     // tie
     else if (turnNumber === 9) {
       stopGame();
-      winningMessage.innerText = "It's a tie!";
-      winMessageDiv.append(winningMessage);
+      winningMessage.innerHTML = "<p class='win-message'>CAT!</p>";
+      sideContainer.append(winningMessage);
     }
   };
 
