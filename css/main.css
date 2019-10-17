@@ -26,6 +26,8 @@ body {
   border-radius: 10px;
   display: grid;
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  transform-style: preserve-3d;
+  transform: perspective(1000px);
 }
 
 .box {
@@ -41,6 +43,7 @@ body {
 
 .box:hover {
   background-color: #57728c;
+  transform: translateZ(20px);
 }
 
 .disable-clicking {
@@ -82,8 +85,10 @@ body {
   float: left;
   border-radius: 10%;
   width: 20%;
-  height: 200px;
+  height: 300px;
   text-align: center;
+  transform-style: preserve-3d;
+  transform: perspective(1000px);
 }
 
 #title {
@@ -105,9 +110,32 @@ body {
   border-radius: 10%;
   font-family: Helvetica, sans-serif;
   margin-bottom: 20px;
+  transform: translateZ(20px);
+}
+
+#switch-button {
+  border: 1px solid white;
+  height: 40px;
+  background-color: transparent;
+  padding: 10px;
+  margin-top: 25px;
+  color: white;
+  border-radius: 10%;
+  font-family: Helvetica, sans-serif;
+  margin-bottom: 20px;
+  transform: translateZ(20px);
+  margin-left: 10px;
+}
+
+#side-container p {
+  transform: translateZ(20px);
 }
 
 #reset-button:hover {
+  cursor: pointer;
+}
+
+#switch-button:hover {
   cursor: pointer;
 }
 
