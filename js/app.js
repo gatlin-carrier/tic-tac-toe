@@ -15,7 +15,7 @@ window.onload = () => {
   // an array that keeps track of the player's moves
   let moves = [];
 
-  let classes = ["disable-clicking", "animated", "pulse", "infinite"];
+  let classes = ["disable-clicking", "animated", "flash", "infinite"];
 
   let scores = {
     playerOneScore: 0,
@@ -26,15 +26,9 @@ window.onload = () => {
   let randomChoice = () => Math.floor(Math.random() * 9) + 0;
 
   let animateWinner = (box1, box2, box3) => {
-    // box1.innerHTML = `<div className="disable-clicking animate pulse">${box1.innerText}</div>`;
-    // box2.className = `<div className="disable-clicking animate pulse">${box2.innerText}</div>`;
-    // box3.className = `<div className="disable-clicking animate pulse">${box3.innerText}</div>`;
-    // box1.classList.add(...classes);
-    // box2.classList.add(...classes);
-    // box3.classList.add(...classes);
-    // boxes[0].classList.add(...classes);
-    // boxes[1].classList.add(...classes);
-    // boxes[2].classList.add(...classes);
+    box1.classList.add(...classes);
+    box2.classList.add(...classes);
+    box3.classList.add(...classes);
   };
 
   // function that disable the player from being able to click the boxes after a win condition is met
@@ -85,7 +79,7 @@ window.onload = () => {
       moves[1] === moves[2]
     ) {
       stopGame();
-      animateWinner(moves[0], moves[1], moves[2]);
+      animateWinner(boxes[0], boxes[1], boxes[2]);
       return appendWinnerMessage(moves[0]);
     }
     // row 2
@@ -95,7 +89,7 @@ window.onload = () => {
       moves[4] === moves[5]
     ) {
       stopGame();
-      animateWinner(moves[3], moves[4], moves[5]);
+      animateWinner(boxes[3], boxes[4], boxes[5]);
       return appendWinnerMessage(moves[3]);
     }
     // row 3
@@ -105,7 +99,7 @@ window.onload = () => {
       moves[7] === moves[8]
     ) {
       stopGame();
-      animateWinner(moves[6], moves[7], moves[8]);
+      animateWinner(boxes[6], boxes[7], boxes[8]);
       return appendWinnerMessage(moves[6]);
     }
     // column 1
@@ -115,7 +109,7 @@ window.onload = () => {
       moves[3] === moves[6]
     ) {
       stopGame();
-      animateWinner(moves[0], moves[3], moves[6]);
+      animateWinner(boxes[0], boxes[3], boxes[6]);
       return appendWinnerMessage(moves[0]);
     }
     // column 2
@@ -125,7 +119,7 @@ window.onload = () => {
       moves[4] === moves[7]
     ) {
       stopGame();
-      animateWinner(moves[1], moves[4], moves[7]);
+      animateWinner(boxes[1], boxes[4], boxes[7]);
       return appendWinnerMessage(moves[1]);
     }
     // column 3
@@ -135,7 +129,7 @@ window.onload = () => {
       moves[5] === moves[8]
     ) {
       stopGame();
-      animateWinner(moves[2], moves[5], moves[8]);
+      animateWinner(boxes[2], boxes[5], boxes[8]);
       return appendWinnerMessage(moves[2]);
     }
     // diagonal 1
@@ -145,7 +139,7 @@ window.onload = () => {
       moves[4] === moves[8]
     ) {
       stopGame();
-      animateWinner(moves[0], moves[4], moves[8]);
+      animateWinner(boxes[0], boxes[4], boxes[8]);
       return appendWinnerMessage(moves[0]);
     }
     // diagonal 2
@@ -155,7 +149,7 @@ window.onload = () => {
       moves[4] === moves[6]
     ) {
       stopGame();
-      animateWinner(moves[2], moves[4], moves[6]);
+      animateWinner(boxes[2], boxes[4], boxes[6]);
       return appendWinnerMessage(moves[2]);
     }
     // tie
@@ -172,6 +166,7 @@ window.onload = () => {
 
     let easyAI = () => {
       let randomNumber = randomChoice();
+      //   console.log(randomNumber);
       if (
         turnNumber % 2 === 0 &&
         // moves[randomNumber] === undefined
