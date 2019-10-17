@@ -6,8 +6,11 @@ window.onload = () => {
   const playerOneScoreText = document.querySelector("#player-one");
   const playerTwoScoreText = document.querySelector("#player-two");
   const sideContainer = document.querySelector("#side-container");
+  const switchButton = document.querySelector("#switch-button");
+  const modeText = document.querySelector("#mode-text");
 
   let gameOver = false;
+  let gameMode = true;
 
   // a counter to track which turn it is
   let turnNumber = 0;
@@ -54,6 +57,8 @@ window.onload = () => {
     winningMessage.remove();
     turnNumber = 0;
     moves = [];
+    playerOneScoreText.innerText = "PLAYER O: 0";
+    playerTwoScoreText.innerText = "PLAYER X: 0";
     boxes.forEach(box => {
       box.className = "box";
     });
@@ -160,6 +165,22 @@ window.onload = () => {
     }
   };
 
+  // switches the truth value of the game mode
+
+  let switchButtonController = () => {
+    if (gameMode === true) {
+      modeText.innerText = "MODE: AI";
+      gameMode = false;
+      handleReset();
+    } else {
+      modeText.innerText = "MODE: PvP";
+      gameMode = true;
+      handleReset();
+    }
+  };
+
+  switchButton.addEventListener("click", switchButtonController);
+
   // loops through each box
   boxes.forEach((box, boxIndex) => {
     // a handler that determines if it is empty, then adds an X or O depending on if turnNumber is even or odd. It then adds one to turn number and checks for a win.
@@ -195,43 +216,37 @@ window.onload = () => {
         checkForWin();
         easyAI();
       }
-
-      //   if (moves[randomNumber] === "X") {
-      //     randomChoice();
-      //     easyAI();
-      //   }
-
-      //   console.log(moves);
-      //   console.log(boxes);
     };
 
-    // let turns = () => {
-    //   if (
-    //     turnNumber % 2 === 0 &&
-    //     box.innerText !== "X" &&
-    //     box.innerText !== "O"
-    //   ) {
-    //     box.innerText = "X";
-    //     moves[boxIndex] = "X";
-    //     easyAI();
-    //     turnNumber++;
-    //     checkForWin();
-    //   }
-    //   if (
-    //     turnNumber % 1 === 0 &&
-    //     box.innerText !== "X" &&
-    //     box.innerText !== "O"
-    //   ) {
-    //     // easyAITurn();
-    //     // moves[randomNumber] = "O";
-    //     // box.innerText = "O";
-    //     // moves[boxIndex] = "O";
-    //     turnNumber++;
-    //     checkForWin();
-    //   }
-    // };
-    //attaches the turns function to each box
-    // box.addEventListener("click", turns);
-    box.addEventListener("click", easyAI);
+    let playerGameMode = () => {
+      if (
+        turnNumber % 2 === 0 &&
+        box.innerText !== "X" &&
+        box.innerText !== "O"
+      ) {
+        box.innerText = "X";
+        moves[boxIndex] = "X";
+        turnNumber++;
+        checkForWin();
+      }
+      if (
+        turnNumber % 1 === 0 &&
+        box.innerText !== "X" &&
+        box.innerText !== "O"
+      ) {
+        box.innerText = "O";
+        moves[boxIndex] = "O";
+        turnNumber++;
+        checkForWin();
+      }
+    };
+
+    let changeGameMode = () => {
+      gameMode ? playerGameMode() : easyAI();
+    };
+
+    //calls the AI or PvP function when a box is clicked
+
+    box.addEventListener("click", changeGameMode);
   });
 };
