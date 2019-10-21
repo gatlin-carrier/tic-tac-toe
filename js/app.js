@@ -11,6 +11,7 @@ window.onload = () => {
 
   let gameOver = false;
   let gameMode = true;
+  let turnCompleted = false;
 
   // a counter to track which turn it is
   let turnNumber = 0;
@@ -18,24 +19,24 @@ window.onload = () => {
   // an array that keeps track of the player's moves
   let moves = [];
 
-  let classes = ["disable-clicking", "animated", "flash", "infinite"];
+  const classes = ["disable-clicking", "animated", "flash", "infinite"];
 
-  let scores = {
+  const scores = {
     playerOneScore: 0,
     playerTwoScore: 0
   };
 
   // returns a random number to be used in the easyAI function
-  let randomChoice = () => Math.floor(Math.random() * 9) + 0;
+  const randomChoice = () => Math.floor(Math.random() * 9) + 0;
 
-  let animateWinner = (box1, box2, box3) => {
+  const animateWinner = (box1, box2, box3) => {
     box1.classList.add(...classes);
     box2.classList.add(...classes);
     box3.classList.add(...classes);
   };
 
   // function that disable the player from being able to click the boxes after a win condition is met
-  let stopGame = () => {
+  const stopGame = () => {
     boxes.forEach(box => {
       box.className = "disable-clicking";
     });
@@ -43,22 +44,25 @@ window.onload = () => {
   };
 
   // a function that is passed the winner variable from the checkForWin function and then adds one to either player X or player O
-  let updatePlayerScore = winner => {
+  const updatePlayerScore = winner => {
     winner === "X" ? scores.playerTwoScore++ : scores.playerOneScore++;
     playerOneScoreText.innerHTML = `PLAYER O: ${scores.playerOneScore}`;
     playerTwoScoreText.innerHTML = `PLAYER X: ${scores.playerTwoScore}`;
   };
 
   // resets basically everything back to the start condition except the scores
-  let handleReset = () => {
+  const handleReset = () => {
     boxes.forEach(box => {
       box.innerText = "";
     });
     winningMessage.remove();
     turnNumber = 0;
     moves = [];
-    playerOneScoreText.innerText = "PLAYER O: 0";
-    playerTwoScoreText.innerText = "PLAYER X: 0";
+    if (gameMode === false) {
+      playerOneScoreText.innerText = "PLAYER O: 0";
+      playerTwoScoreText.innerText = "PLAYER X: 0";
+    }
+
     boxes.forEach(box => {
       box.className = "box";
     });
@@ -68,7 +72,7 @@ window.onload = () => {
   resetButton.addEventListener("click", handleReset);
 
   // a function that is passed the winner variable and then appends a message that declares the winner based on that variable
-  let appendWinnerMessage = winner => {
+  const appendWinnerMessage = winner => {
     winningMessage.innerHTML = `<p class="win-message">Player ${winner} won in ${turnNumber} turns</p>`;
     sideContainer.append(winningMessage);
     gameOver = true;
@@ -76,7 +80,7 @@ window.onload = () => {
   };
 
   // function with conditional logic that checks if a win condition has been met
-  let checkForWin = () => {
+  const checkForWin = () => {
     // row 1
     if (
       moves[0] !== undefined &&
@@ -167,7 +171,7 @@ window.onload = () => {
 
   // switches the truth value of the game mode
 
-  let switchButtonController = () => {
+  const switchButtonController = () => {
     if (gameMode === true) {
       modeText.innerText = "MODE: AI";
       gameMode = false;
@@ -183,14 +187,11 @@ window.onload = () => {
 
   // loops through each box
   boxes.forEach((box, boxIndex) => {
-    // a handler that determines if it is empty, then adds an X or O depending on if turnNumber is even or odd. It then adds one to turn number and checks for a win.
-
-    let easyAI = () => {
+    const easyAI = () => {
       let randomNumber = randomChoice();
-      //   console.log(randomNumber);
+
       if (
         turnNumber % 2 === 0 &&
-        // moves[randomNumber] === undefined
         boxes[boxIndex].innerText !== "X" &&
         boxes[boxIndex].innerText !== "O"
       ) {
@@ -198,19 +199,28 @@ window.onload = () => {
         moves[boxIndex] = "X";
         checkForWin();
         turnNumber++;
+        turnCompleted = true;
+        console.log("X: " + turnNumber);
         easyAI();
-      } else if (
+      }
+      if (
         turnNumber % 2 !== 0 &&
         moves[randomNumber] !== "X" &&
         moves[randomNumber] !== "O"
-        // moves[randomNumber] === undefined
       ) {
         boxes[randomNumber].innerText = "O";
         moves[randomNumber] = "O";
-        turnNumber++;
         checkForWin();
+        turnCompleted = true;
+        turnNumber++;
       }
-      if (gameOver === true) {
+      if (turnCompleted === false && turnNumber % 2 !== 0) {
+        boxes[randomNumber].innerText = "O";
+        moves[randomNumber] = "O";
+        checkForWin();
+        turnCompleted = true;
+        turnNumber++;
+      } else if (gameOver === true) {
         return;
       } else {
         checkForWin();
@@ -218,7 +228,7 @@ window.onload = () => {
       }
     };
 
-    let playerGameMode = () => {
+    const playerGameMode = () => {
       if (
         turnNumber % 2 === 0 &&
         box.innerText !== "X" &&
@@ -241,7 +251,7 @@ window.onload = () => {
       }
     };
 
-    let changeGameMode = () => {
+    const changeGameMode = () => {
       gameMode ? playerGameMode() : easyAI();
     };
 
